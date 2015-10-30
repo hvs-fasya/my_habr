@@ -17,4 +17,5 @@
 /tmp
 
 # Ignore all files for json-handling.
-*.json.jbuilder
+/app/views/comments/*.json.jbuilder
+/app/views/posts/*.json.jbuilder
