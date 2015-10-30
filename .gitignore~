@@ -15,6 +15,3 @@
 /log/*
 !/log/.keep
 /tmp
-
-# Ignore all files for json-handling.
-*.json.jbuilder

@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :comments
   resources :posts
-  resources :posts
+  resources :categories
+  
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
