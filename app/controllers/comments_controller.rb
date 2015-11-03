@@ -14,11 +14,21 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new
+    @posts = Post.all
+    @post_titles = []
+    @posts.each do |p|
+      @post_titles.push([p.title,p.id])
+    end
   end
 
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
+    @posts = Post.all
+    @post_titles = []
+    @posts.each do |p|
+      @post_titles.push([p.title,p.id])
+    end
   end
 
   # POST /comments
@@ -56,6 +66,6 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:body)
+      params.require(:comment).permit(:body,:post_id)
     end
 end

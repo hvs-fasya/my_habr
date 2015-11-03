@@ -19,6 +19,30 @@
     <%= f.label :body %><br>
     <%= f.text_area :body %>
   </div>
+  <div class="field">
+    <strong>Select category:</strong>
+    <ul>
+      <%= f.fields_for :categories do |category_fields| %>
+      <% @categories.each do |category| %>
+        <%= category_fields.check_box(category.id) %>
+        <%= label_tag(:category_id, category.title) %>
+      <% end %>
+      <% end %>
+
+    </ul>
+  </div>
+  <div class="field">
+    <strong>Select tags:</strong>
+    <ul>
+      <%= f.fields_for :tags do |tag_fields| %>
+      <% @tags.each do |tag| %>
+        <%= tag_fields.check_box(tag.id) %>
+        <%= label_tag(:tag_id, tag.name) %>
+      <% end %>
+      <% end %>
+
+    </ul>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

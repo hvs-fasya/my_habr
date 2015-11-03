@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :comments
   resources :posts
   resources :categories
+  resources :tags
+  resources :users
+  resources :profiles
   
   get 'welcome/index'
 

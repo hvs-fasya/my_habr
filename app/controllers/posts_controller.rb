@@ -16,11 +16,15 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @tags = Tag.all
+    @categories = Category.all
   end
 
   # GET /posts/1/edit
   def edit
     @post = Post.find(params[:id])
+    @tags = Tag.all
+    @categories = Category.all
   end
 
   # POST /posts
