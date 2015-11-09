@@ -1,27 +1,12 @@
-<%= form_for(@comment) do |f| %>
-  <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
-      <ul>
-      <% @comment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for([@post, Comment.new]) do |f| %>
+
 
   <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %><br>
-  </div>
-  <div class="field">
-    <%= f.label :post_id %><br>
-    <%= f.select(:post_id, options_for_select(@post_titles, @post_titles.count)) %>
+    <%= f.label :body, 'Ваш комментарий:' %>
+    <%= f.text_area :body, class: "form-control" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Сохранить", :class =>"btn btn-primary btn-xs"%>
   </div>
 <% end %>
-
-

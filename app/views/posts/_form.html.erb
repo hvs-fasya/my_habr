@@ -1,49 +1,24 @@
 <%= form_for(@post) do |f| %>
-  <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-      <ul>
-      <% @post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
   <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= f.label :title, 'Название поста:' %>
+    <%= f.text_field :title, class: "form-control" %>
   </div>
   <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= f.label :body, 'Текст поста:' %>
+    <%= f.text_area :body, class: "form-control" %>
   </div>
   <div class="field">
-    <strong>Select category:</strong>
-    <ul>
-      <%= f.fields_for :categories do |category_fields| %>
-      <% @categories.each do |category| %>
-        <%= category_fields.check_box(category.id) %>
-        <%= label_tag(:category_id, category.title) %>
-      <% end %>
-      <% end %>
+    <%= f.label :tag_ids, 'Выберите теги:' %>
+    <%= f.collection_select :tag_ids, Tag.all, :id, :name, {}, { :multiple => true, :class => "form-control" } %>
+  </div>
 
-    </ul>
+  <div class="field well">
+    <%= f.label :category_ids, 'Выберите категорию:' %>
+    <%= f.collection_check_boxes :category_ids, Category.all, :id, :title, {}, { class: "checkbox" } %>
   </div>
-  <div class="field">
-    <strong>Select tags:</strong>
-    <ul>
-      <%= f.fields_for :tags do |tag_fields| %>
-      <% @tags.each do |tag| %>
-        <%= tag_fields.check_box(tag.id) %>
-        <%= label_tag(:tag_id, tag.name) %>
-      <% end %>
-      <% end %>
-
-    </ul>
-  </div>
+  
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class =>"btn btn-primary btn-sm" %>
   </div>
 <% end %>

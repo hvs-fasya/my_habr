@@ -14,31 +14,25 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new
-    @posts = Post.all
-    @post_titles = []
-    @posts.each do |p|
-      @post_titles.push([p.title,p.id])
-    end
   end
 
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
-    @posts = Post.all
-    @post_titles = []
-    @posts.each do |p|
-      @post_titles.push([p.title,p.id])
-    end
   end
 
   # POST /comments
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
+    @post = Post.find(params[:post_id])
+    @comment.post_id = params[:post_id]
     if @comment.save
-      redirect_to @comment, notice: 'Comment was successfully created.'
+      flash[:notice] = ("<h4>Comment was successfully created.</h4>").html_safe
+      redirect_to @post
     else
-      render :new
+      make_alert ('Comment creation failed.')
+      redirect_to @post
     end
   end
 
@@ -47,7 +41,8 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     if @comment.update(comment_params)
-      redirect_to @comment, notice: 'Comment was successfully updated.'
+      make_alert('Comment was successfully updated.')
+      redirect_to @comment
     else
       render :edit
     end
@@ -67,5 +62,15 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params.require(:comment).permit(:body,:post_id)
+    end
+
+    def make_alert (alert_header)
+      flash[:alert] = "<h4>#{alert_header}</h4>"
+        if @comment.errors.any?
+            @comment.errors.full_messages.each do |message|
+                flash[:alert] += '</br>'+ message
+          end
+        end
+        flash[:alert] = flash[:alert].html_safe
     end
 end

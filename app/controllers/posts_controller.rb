@@ -4,7 +4,12 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+      if params[:category_id]
+        @category = Category.find(params[:category_id])
+        @posts = @category.posts.order(created_at: :desc)
+      else
+        @posts = Post.all.order(created_at: :desc)
+      end
   end
 
   # GET /posts/1
@@ -32,8 +37,10 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      redirect_to @post, notice: 'Post was successfully created.'
+      flash[:notice] = "<h4>Post has been successfully created</h4>".html_safe
+      redirect_to @post
     else
+      make_alert('Post creation failed')
       render :new
     end
   end
@@ -43,8 +50,10 @@ class PostsController < ApplicationController
   def update
       @post = Post.find(params[:id])
       if @post.update(post_params)
-        redirect_to @post, notice: 'Post was successfully updated.'
+        make_notice('Post has been successfully updated')
+        redirect_to @post
       else
+        make_alert('Post update failed')
         render :edit
       end
   end
@@ -54,7 +63,13 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    redirect_to posts_url, notice: 'Post was successfully destroyed.'
+    if @post.destroyed?
+      flash[:notice] = "<h4>Post was successfully destroyed.</h4>".html_safe
+      redirect_to posts_url
+    else
+      make_alert('Post has not been destroyed')
+      redirect_to posts_url
+    end
   end
 
   private
@@ -67,4 +82,25 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :body)
     end
+
+    def make_alert (alert_header)
+      flash[:alert] = "<h4>#{alert_header}</h4>"
+        if @post.errors.any?
+            @post.errors.full_messages.each do |message|
+                flash[:alert] += ('</br>'+ message)
+          end
+        end
+        flash[:alert] = flash[:alert].html_safe
+    end
+
+    def make_notice (notice_header)
+      flash[:notice] = "<h4>#{notice_header}</h4>"
+        if @post.errors.any?
+            @post.errors.full_messages.each do |message|
+                flash[:notice] += '</br>'+ message
+          end
+        end
+        flash[:notice] = flash[:notice].html_safe
+    end
+
 end

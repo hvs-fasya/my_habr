@@ -1,0 +1,19 @@
+<% unless post.comments.empty? %>
+
+    <div id="post_comments">
+      <strong>Комментарии:</strong>
+      <hr>
+      <ul class="list-unstyled">
+		<% post.comments.each do |c| %>
+			<li>
+				<blockquote><small><%= c.body %></small></blockquote>
+				<small><strong>By: user-name</strong>
+				<cite><%= c.created_at.strftime("%d %b %Y at %H:%M") %></cite></small>
+				<hr>
+			</li>
+		<% end %>
+	  </ul>
+	</div>
+<% else %>
+		<p>Комментариев пока нет. Оставьте комментарий первым.</p>
+<% end %>

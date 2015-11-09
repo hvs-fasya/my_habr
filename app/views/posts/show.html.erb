@@ -1,39 +1,36 @@
-<p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @post.title %>
+  <strong><h4><%= @post.title %></h4></strong>
+  
 </p>
 
 <p>
-  <strong>Body:</strong>
-  <%= @post.body %>
+  <strong>By:</strong>
+  <span>TODO: here should be the user-name later....</span>
 </p>
 
 <p>
-  <strong>Author:</strong>
-  <%= @post.user.login %>
+	<strong>Категории:</strong>
+	<em><%= @post.categories.map{|el| el.title }.join(", ") %></em>
 </p>
 
 <p>
-	<strong>Tags:</strong>
-	<ul>
+	<ul class="list-inline">
+		<li><strong>Tags:</strong></li>
 		<% @post.tags.each do |tag| %>
-			<li><%= tag.name %></li>
+			<li class="btn btn-default btn-xs">#<%= tag.name %></li>
 		<% end %>
 	</ul>
 </p>
 
-<p>
-	<strong>Comments:</strong>
-	<ul>
-		<span>------</span>
-		<% @post.comments.each do |c| %>
-			<li><%= c.body %><br>
-			<span>------</span></li>
-		<% end %>
-	</ul>
-</p>
+<div class="well">
+  <%= raw @post.body %>
+</div>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back to Posts', posts_path %>
+<%= render "comments/form" %>
+<%= render "comments/comments", post: @post %>
+
+<hr>
+<%= link_to 'Редактировать пост', edit_post_path(@post), class: "btn btn-link" %> |
+<%= link_to 'Назад к списку постов', posts_path, class: "btn btn-link" %>
+<hr>
