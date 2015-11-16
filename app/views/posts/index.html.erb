@@ -18,12 +18,18 @@
 <% @posts.each do |post| %>
   <% title = "<h4><strong>#{post.title}</strong></h4>".html_safe %>
   <h2><%= link_to title, post, class: "btn btn-link" %></h2>
+  <% if user_signed_in? && current_user == post.user %>
+    <span>
+      <%= link_to "Редактировать", edit_post_path(post), class: "btn btn-link" %> |
+      <%= link_to "Удалить", post_path(post), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот пост?" }, class: "btn btn-link" %>
+    </span>
+  <% end %>
   <div class="well">
     <p>
       <small><cite><%= post.created_at.strftime("%-d %b %Y %H:%M") %></cite></small>
     </p>
     <p>
-      <small><strong>By: TODO: here should be the user-name later....</strong></small>
+      <small><strong>By: <%= post.user.email %></strong></small>
     </p>
     
     <p><%= raw post.body.truncate(150) %></p>
@@ -35,5 +41,5 @@
 
 <br>
 
-<%= link_to '<<< Назад на Главную страницу', welcome_index_path, class: "btn btn-default" %>
+<%= link_to '<<< На Главную страницу (welcome#index)', welcome_index_path, class: "btn btn-default" %>
 <hr>

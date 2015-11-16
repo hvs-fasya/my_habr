@@ -1,14 +1,18 @@
-<% unless post.comments.empty? %>
+<% unless @post.comments.empty? %>
 
     <div id="post_comments">
       <strong>Комментарии:</strong>
       <hr>
       <ul class="list-unstyled">
-		<% post.comments.each do |c| %>
+		<% @post.comments.each do |c| %>
 			<li>
 				<blockquote><small><%= c.body %></small></blockquote>
-				<small><strong>By: user-name</strong>
-				<cite><%= c.created_at.strftime("%d %b %Y at %H:%M") %></cite></small>
+				<small><strong>By: <%= c.user.email %></strong> 
+				<cite><%= c.created_at.strftime("%d %b %Y at %H:%M") %>
+				<% if user_signed_in? && c.user == current_user %>
+					<%= link_to 'Редактировать комментарий', edit_comment_path(c), class: "btn btn-link" %> |
+					<%= link_to 'Удалить комментарий', comment_path(c), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот комментарий?" },  class: "btn btn-link" %></cite></small>
+				<% end %>
 				<hr>
 			</li>
 		<% end %>

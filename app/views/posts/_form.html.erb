@@ -1,5 +1,7 @@
 <%= form_for(@post) do |f| %>
 
+  <%= render "common/errors", object: @post %>
+
   <div class="field">
     <%= f.label :title, 'Название поста:' %>
     <%= f.text_field :title, class: "form-control" %>
@@ -17,7 +19,9 @@
     <%= f.label :category_ids, 'Выберите категорию:' %>
     <%= f.collection_check_boxes :category_ids, Category.all, :id, :title, {}, { class: "checkbox" } %>
   </div>
-  
+  <% if user_signed_in? %>
+    <%= f.hidden_field :user_id, { :value => current_user.id } %>
+  <% end %>
   <div class="actions">
     <%= f.submit :class =>"btn btn-primary btn-sm" %>
   </div>

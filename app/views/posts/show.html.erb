@@ -1,12 +1,11 @@
-
 <p>
   <strong><h4><%= @post.title %></h4></strong>
   
 </p>
 
 <p>
-  <strong>By:</strong>
-  <span>TODO: here should be the user-name later....</span>
+  <strong>By: </strong>
+  <span><%= @post.user.email %></span>
 </p>
 
 <p>
@@ -22,15 +21,18 @@
 		<% end %>
 	</ul>
 </p>
-
 <div class="well">
   <%= raw @post.body %>
 </div>
 
-<%= render "comments/form" %>
-<%= render "comments/comments", post: @post %>
+<%= render "comments/form", comment: @comment = Comment.new %>
+<%= render "comments/comments" %>
 
 <hr>
-<%= link_to 'Редактировать пост', edit_post_path(@post), class: "btn btn-link" %> |
+
+<% if user_signed_in? && @post.user == current_user %>
+	<%= link_to 'Редактировать пост', edit_post_path(@post), class: "btn btn-link" %> |
+	<%= link_to 'Удалить пост', post_path(@post), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот пост?" },  class: "btn btn-link" %> |
+<% end %>
 <%= link_to 'Назад к списку постов', posts_path, class: "btn btn-link" %>
 <hr>

@@ -1,6 +1,5 @@
 <h1>Editing Comment</h1>
 
-<%= render 'form' %>
+<%= render 'form'%>
 
-<%= link_to 'Show', @comment %> |
-<%= link_to 'Back to Comments', comments_path %>
+<%= link_to 'Назад к посту', post_path(@comment.post) %>

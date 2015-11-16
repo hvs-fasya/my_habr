@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :posts do
-    resources :comments, shallow: true
+    resources :comments
   end
+  resources :comments
   resources :categories
   resources :tags
   resources :users
@@ -11,10 +13,14 @@ Rails.application.routes.draw do
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+  # unauthenticated do
+  #     as :user do
+  #       root to: 'posts#index', as: :unauthenticated_root
+  #     end
+  #   end
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

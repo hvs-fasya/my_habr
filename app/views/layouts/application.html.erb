@@ -48,9 +48,15 @@
         <a class="navbar-brand" href="#">MyHabr</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Link1", "/path1"  %></li>
+            <li><%= link_to "Welcome#index", "/"  %></li>
             <li><%= link_to "Link2", "/path2"  %></li>
-            <li><%= link_to "Link3", "/path3"  %></li>
+            <li>
+              <% if user_signed_in? %>
+                <%= link_to "User: #{current_user.email} - выйти", destroy_user_session_path, method: "delete" %>
+              <% else %>
+                <%= link_to "Войти", new_user_session_path %>
+              <% end %>
+            </li>
           </ul>
         </div>
       </div>
@@ -66,7 +72,7 @@
           <div class="well sidebar-nav">
             <h3>Навигация по категориям</h3>
             <ul class="nav nav-list">
-              <li><%= link_to "Все посты", "/posts" %></li>
+              <li><%= link_to "Все посты", posts_path %></li>
               <% Category.all.each do |category| %>
                 <li><%= link_to category.title, "/posts?category_id=#{category.id}" %></li>
               <% end %>
