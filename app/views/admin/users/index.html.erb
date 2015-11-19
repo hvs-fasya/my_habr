@@ -1,0 +1,15 @@
+<h2>Все пользователи</h2>
+<hr>
+<% if @users.empty? %>
+    <hr>
+    <p>Не в курсе как это вообще возможно, но нет ни одного пользователя...</p>
+    <hr>
+<% end %>
+
+<%= render "users" %>
+
+
+<br>
+
+<%= link_to '<<< На Главную - Dashboard', admin_welcome_index_path, class: "btn btn-default" %>
+<hr>

@@ -1,0 +1,17 @@
+<%= form_for([:admin, @post, comment]) do |f| %>
+
+<%= render "common/errors", object: comment %>
+
+  <div class="field">
+    <%= f.label :body, 'Ваш комментарий:' %>
+	  <% if user_signed_in? %>
+		    <%= f.text_area :body, class: "form-control" %>
+  </div>
+  <div class="actions">
+		    <%= f.submit "Сохранить", :class =>"btn btn-primary btn-xs"%>
+  </div>
+	  <% else %>
+	  	<%= f.text_area :body, placeholder: "Авторизуйтесь, чтобы оставлять комментарии", disabled: true, class: "form-control" %>
+  </div>
+	  <% end %>
+<% end %>

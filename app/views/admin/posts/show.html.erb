@@ -1,0 +1,39 @@
+<p>
+  <strong><h4><%= @post.title %></h4></strong>
+  
+</p>
+
+<p>
+  <strong>By: </strong>
+  <span><%= @post.user.email %></span>
+</p>
+
+<p>
+	<strong>Категории:</strong>
+	<em><%= @post.categories.map{|el| el.title }.join(", ") %></em>
+</p>
+
+<p>
+	<ul class="list-inline">
+		<li><strong>Tags:</strong></li>
+		<% @post.tags.each do |tag| %>
+			<li class="btn btn-default btn-xs">#<%= tag.name %></li>
+		<% end %>
+	</ul>
+</p>
+<div class="well">
+  <%= raw @post.body %>
+</div>
+
+
+<%= render "admin/comments/form", comment: Comment.new %>
+<%= render "admin/comments/comments" %>
+
+<hr>
+
+<% if current_user && current_user.admin? %>
+	<%= link_to 'Редактировать пост', edit_admin_post_path(@post), class: "btn btn-link" %> |
+	<%= link_to 'Удалить пост', admin_post_path(@post), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот пост?" },  class: "btn btn-link" %> |
+<% end %>
+<%= link_to 'Назад к списку постов', admin_posts_path, class: "btn btn-link" %>
+<hr>

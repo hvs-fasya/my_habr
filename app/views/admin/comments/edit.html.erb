@@ -1,0 +1,7 @@
+<h1>Editing Comment</h1>
+
+<%= render 'admin/comments/form', comment: @comment %>
+
+<%= link_to 'Назад к посту', admin_post_path(@comment.post), class: "btn btn-link" %>
+
+<hr>

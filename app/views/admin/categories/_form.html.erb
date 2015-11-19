@@ -1,0 +1,10 @@
+<%= form_for([:admin, @category]) do |c| %>
+
+  <div class="field">
+    <%= c.label :title %><br>
+    <%= c.text_field :title, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= c.submit :class =>"btn btn-primary btn-sm"%>
+  </div>
+<% end %>

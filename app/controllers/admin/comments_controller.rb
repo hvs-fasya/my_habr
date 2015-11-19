@@ -1,7 +1,7 @@
-class CommentsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+class Admin::CommentsController < Admin::BaseController
+  # before_action :authenticate_user!, except: [:index, :show]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :verify_owner, only: [:edit, :update, :destroy]
+  # before_action :verify_owner, only: [:edit, :update, :destroy]
   # GET /comments
   # GET /comments.json
   def index
@@ -33,10 +33,10 @@ class CommentsController < ApplicationController
     @comment.post = @post
     if @comment.save
       # flash[:notice] = ("<h4></h4>").html_safe
-      redirect_to @post, notice: 'Comment was successfully created.'
+      redirect_to [:admin, @post], notice: 'Comment was successfully created.'
     else
       # make_alert ()
-      redirect_to @post, alert: 'Comment creation failed.'
+      redirect_to [:admin, @post], alert: 'Comment creation failed.'
     end
   end
 
@@ -47,7 +47,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       @post = Post.find(params[:post_id])
       # make_alert()
-      redirect_to @post, notice: 'Comment was successfully updated.'
+      redirect_to [:admin, @post], notice: 'Comment was successfully updated.'
     else
       render :edit, alert: 'Comment update failed.'
     end
@@ -59,7 +59,7 @@ class CommentsController < ApplicationController
     # @comment = Comment.find(params[:id])
     # @post = @comment.post
     @comment.destroy
-    redirect_to @comment.post, notice: 'Comment has been successfully destroyed.'
+    redirect_to [:admin, @comment.post], notice: 'Comment has been successfully destroyed.'
   end
 
   private
@@ -72,11 +72,11 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:body,:post_id,:user_id)
     end
-    def verify_owner
-      unless user_signed_in? && current_user.id == @comment.user.id
-        redirect_to @comment.post, notice: 'У вас нет прав на выполнение этого действия.'
-      end
-    end
+    # def verify_owner
+    #   unless user_signed_in? && current_user.id == @comment.user.id
+    #     redirect_to @comment.post, notice: 'У вас нет прав на выполнение этого действия.'
+    #   end
+    # end
     # def make_alert (alert_header)
     #   flash[:alert] = "<h4>#{alert_header}</h4>"
     #     if @comment.errors.any?

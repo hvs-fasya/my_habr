@@ -1,0 +1,22 @@
+<% @posts.each do |post| %>
+  <% title = "<h4><strong>#{post.title}</strong></h4>".html_safe %>
+  <h2><%= link_to title, post, class: "btn btn-link" %></h2>
+  <% if user_signed_in? && current_user == post.user %>
+    <span>
+      <%= link_to "Редактировать", edit_post_path(post), class: "btn btn-link" %> |
+      <%= link_to "Удалить", post_path(post), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот пост?" }, class: "btn btn-link" %>
+    </span>
+  <% end %>
+  <div class="well">
+    <p>
+      <small><cite><%= post.created_at.strftime("%-d %b %Y %H:%M") %></cite></small>
+    </p>
+    <p>
+      <small><strong>By: <%= post.user.email %></strong></small>
+    </p>
+    
+    <p><%= raw post.body.truncate(150) %></p>
+    <p><%= link_to 'Читать далее...', post, class: "btn btn-default btn-xs" %></p>
+  </div>
+    <hr>
+<% end %>

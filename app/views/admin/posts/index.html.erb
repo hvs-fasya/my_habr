@@ -1,3 +1,4 @@
+
 <% if @category %>
   <h4><strong>Категория: </strong><cite><%= @category.title %></cite></h4>
 <% else %>
@@ -10,14 +11,14 @@
     <hr>
   <% else %>
     <hr>
-    <%= link_to 'Здесь может находиться Ваш пост...', new_post_path, class: "btn btn-link" %>
+    <%= link_to 'Создать новый пост...', new_admin_post_path, class: "btn btn-link" %>
     <hr>
 <% end %>
 
 <%= render "posts" %>
 
+
 <br>
 
 <%= link_to_admin_level '<<< На Главную - Dashboard', admin_welcome_index_path, class: "btn btn-default" %>
-
 <hr>

@@ -45,14 +45,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">MyHabr</a>
+        <a class="navbar-brand" href="#">MyHabr - ADMIN</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <% if current_user && current_user.admin? %>
-              <li><%= link_to "Dashboard", admin_welcome_index_path  %></li>
-            <% else %>
-              <li><%= link_to "Link1", "/path1"  %></li>
-            <% end %>
+            <li><%= link_to "Dashboard", admin_welcome_index_path %></li>
             <li><%= link_to "Link2", "/path2"  %></li>
             <li>
               <% if user_signed_in? %>
@@ -72,17 +68,7 @@
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
-        <div class="col-lg-3">
-          <div class="well sidebar-nav">
-            <h3>Навигация по категориям</h3>
-            <ul class="nav nav-list">
-              <li><%= link_to "Все посты", posts_path %></li>
-              <% Category.all.each do |category| %>
-                <li><%= link_to category.title, "/posts?category_id=#{category.id}" %></li>
-              <% end %>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+        
       </div><!--/row-->
 
       <footer>

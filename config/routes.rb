@@ -4,12 +4,18 @@ Rails.application.routes.draw do
     resources :comments
   end
   resources :comments
-  resources :categories
-  resources :tags
-  resources :users
+  resources :categories, only: [:show]
+  resources :tags, only: [:show]
+  resources :users, except: [:destroy]
   resources :profiles
-  
-  get 'welcome/index'
+
+  namespace :admin do
+    get 'welcome/index'
+    resources :posts do
+      resources :comments
+    end
+    resources :categories, :comments, :tags, :users, :profiles
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -20,7 +26,7 @@ Rails.application.routes.draw do
   #   end
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root 'posts#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

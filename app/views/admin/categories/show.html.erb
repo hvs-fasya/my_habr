@@ -1,0 +1,16 @@
+<h4>
+  <strong>Категория:</strong>
+  <%= @category.title %>
+</h4>
+<hr>
+<strong>Постов в этой категории - всего <%= @posts.count %>:</strong>
+
+<%= render "posts/posts" %>
+
+<% if current_user && current_user.admin? %>
+	<%= link_to 'Редактировать категорию', edit_admin_category_path(@category), class: "btn btn-link" %> |
+	<%= link_to 'Удалить категорию', admin_category_path(@category), method: "delete", data: { confirm: "Вы уверены, что хотите удалить эту категорию?" },  class: "btn btn-link" %></br>
+	<hr>
+<% end %>
+<%= link_to 'Назад к списку категорий', admin_categories_path, class: "btn btn-link" %>
+<hr>

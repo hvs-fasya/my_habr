@@ -1,0 +1,19 @@
+<h2>Все категории</h2>
+
+<% if @categories.empty? %>
+    <hr>
+    <span>Категорий пока нет(((( </span>
+    <%= link_to 'Создать новую категорию?', new_admin_category_path, class: "btn btn-link" %>
+    <hr>
+  <% else %>
+    <hr>
+    <%= link_to 'Создать новую категорию', new_admin_category_path, class: "btn btn-link" %>
+    <hr>
+<% end %>
+
+<%= render "categories" %>
+
+<br>
+
+<%= link_to '<<< На Главную - Dashboard', admin_welcome_index_path, class: "btn btn-default" %>
+<hr>

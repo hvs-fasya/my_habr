@@ -8,7 +8,6 @@
   <% if user_signed_in? %>
 	    <%= f.text_area :body, class: "form-control" %>
 	  </div>
-	  	<%= f.hidden_field :user_id, { :value => current_user.id } %>
 	  <div class="actions">
 	    <%= f.submit "Сохранить", :class =>"btn btn-primary btn-xs"%>
 	  </div>
