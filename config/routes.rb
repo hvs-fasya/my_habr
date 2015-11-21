@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :posts do
+    get :unpublished_included, on: :collection
+    get :unpublished, on: :collection
     resources :comments
   end
   resources :comments
@@ -11,10 +13,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'welcome/index'
-    resources :posts do
-      resources :comments
-    end
-    resources :categories, :comments, :tags, :users, :profiles
+    # resources :posts do
+    #   resources :comments
+    # end
+    resources :categories, :tags, :users, :profiles
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

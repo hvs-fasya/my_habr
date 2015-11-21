@@ -5,4 +5,17 @@ module ApplicationHelper
 			link_to(*args)
 		end
 	end
+
+	def link_to_admin_and_owner(user, *args)
+		if user_signed_in? && (user == current_user || current_user.admin?)
+			link_to(*args)
+		end
+	end
+
+	def link_to_signed_in (*args)
+		if user_signed_in?
+			link_to(*args)
+		end
+	end
+	
 end

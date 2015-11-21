@@ -5,13 +5,13 @@
 <% @posts_span = "Все посты <span class='badge'>#{@posts_count}</span>".html_safe %>
 <% @comments_span = "Все комменты - нерабочая ссылка<span class='badge'>#{@comments_count}</span>".html_safe %>
 <% @categpries_span = "Все категории <span class='badge'>#{@categories_count}</span>".html_safe %>
-<% @tags_span = "Все теги <span class='badge'>#{@tags_count}</span>".html_safe %>
+<% @tags_span = "Все теги - нерабочая ссылка<span class='badge'>#{@tags_count}</span>".html_safe %>
 <% @users_span = "Все пользователи <span class='badge'>#{@users_count}</span>".html_safe %>
 
-<%= link_to @posts_span, admin_posts_path, class: "list-group-item active" %></br>
+<%= link_to @posts_span, posts_path, class: "list-group-item active" %></br>
 <%= link_to @comments_span, "#", class: "list-group-item disabled" %></br>
 <%= link_to @categpries_span, admin_categories_path, class: "list-group-item" %></br>
-<%= link_to @tags_span, admin_tags_path, class: "list-group-item" %></br>
+<%= link_to @tags_span, "#", class: "list-group-item disabled" %></br>
 <%= link_to @users_span, admin_users_path, class: "list-group-item" %></br>
 </div>
 

@@ -1,0 +1,16 @@
+<% if current_user && (current_user == post.user || current_user.admin?) %>
+
+  <% if post.published? %>
+      <%= form_for post do |f|%>
+        <%= f.hidden_field :published, { :value => false } %>
+        <%= f.submit "Убрать в черновики", class: "btn btn-default btn-sm" %>
+      <% end %>
+  <% else %>
+      <%= form_for post do |f|%>
+        <%= f.hidden_field :published, { :value => true } %>
+        <%= f.submit "Опубликовать", class: "btn btn-primary btn-sm" %>
+      <% end %>
+  <% end %>
+
+<% end %>
+  <br>

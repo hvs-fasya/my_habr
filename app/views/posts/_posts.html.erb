@@ -1,12 +1,18 @@
 <% @posts.each do |post| %>
-  <% title = "<h4><strong>#{post.title}</strong></h4>".html_safe %>
-  <h2><%= link_to title, post, class: "btn btn-link" %></h2>
-  <% if user_signed_in? && current_user == post.user %>
+
+  <% unpublished = post.published? ? "" : " (черновик)" %>
+  <% title = "<h4><strong>#{post.title}<cite>#{unpublished}</cite></strong></h4>".html_safe %>
+
+  <%= link_to title, post, class: "btn btn-link" %>
+
+  <%= render "publish_control_group", post: post %>
+  
+  
     <span>
-      <%= link_to "Редактировать", edit_post_path(post), class: "btn btn-link" %> |
-      <%= link_to "Удалить", post_path(post), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот пост?" }, class: "btn btn-link" %>
+      <%= link_to_admin_and_owner post.user, "Редактировать", edit_post_path(post), class: "btn btn-link" %>
+      <%= link_to_admin_and_owner post.user, "Удалить", post_path(post), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот пост?" }, class: "btn btn-link" %>
     </span>
-  <% end %>
+ 
   <div class="well">
     <p>
       <small><cite><%= post.created_at.strftime("%-d %b %Y %H:%M") %></cite></small>

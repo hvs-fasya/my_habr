@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :verify_owner, only: [:edit, :update, :destroy]
+  before_action :verify_owner_or_admin, only: [:edit, :update, :destroy]
   # GET /comments
   # GET /comments.json
   def index
@@ -43,10 +43,8 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    # @comment = Comment.find(params[:id])
     if @comment.update(comment_params)
       @post = Post.find(params[:post_id])
-      # make_alert()
       redirect_to @post, notice: 'Comment was successfully updated.'
     else
       render :edit, alert: 'Comment update failed.'
@@ -56,10 +54,13 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
-    # @comment = Comment.find(params[:id])
-    # @post = @comment.post
     @comment.destroy
-    redirect_to @comment.post, notice: 'Comment has been successfully destroyed.'
+    if @comment.destroyed?
+      redirect_to @comment.post, notice: 'Comment has been successfully destroyed.'
+    else
+      flash.now[:alert] = 'Comment has not been destroyed.'
+      redirect_to @comment.post
+    end
   end
 
   private
@@ -72,18 +73,15 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:body,:post_id,:user_id)
     end
-    def verify_owner
-      unless user_signed_in? && current_user.id == @comment.user.id
+    # def verify_owner
+    #   unless user_signed_in? && current_user.id == @comment.user.id
+    #     redirect_to @comment.post, notice: 'У вас нет прав на выполнение этого действия.'
+    #   end
+    # end
+
+    def verify_owner_or_admin
+      unless user_signed_in? && (current_user.id == @comment.user.id || current_user.admin?)
         redirect_to @comment.post, notice: 'У вас нет прав на выполнение этого действия.'
       end
     end
-    # def make_alert (alert_header)
-    #   flash[:alert] = "<h4>#{alert_header}</h4>"
-    #     if @comment.errors.any?
-    #         @comment.errors.full_messages.each do |message|
-    #             flash[:alert] += '</br>'+ message
-    #       end
-    #     end
-    #     flash[:alert] = flash[:alert].html_safe
-    # end
 end

@@ -1,0 +1,16 @@
+<div class="list-group">
+	  <%=  link_to_signed_in "Все опубликованные посты", posts_path, class: "list-group-item" %>
+		<%=  link_to_signed_in "Все посты с доступными черновиками", unpublished_included_posts_path, class: "list-group-item" %>
+		<%=  link_to_signed_in "Доступные черновики", unpublished_posts_path, class: "list-group-item" %>
+  </div>
+
+
+<% if @posts.empty? %>
+    <hr>
+    <%= link_to 'Здесь постов пока еще нет(((( Вы можете стать автором первого поста...', new_post_path, class: "btn btn-link" %>
+    <hr>
+<% else %>
+    <hr>
+    <%= link_to 'Создать новый пост...', new_post_path, class: "btn btn-link" %>
+    <hr>
+<% end %>

@@ -8,11 +8,11 @@
 			<li>
 				<blockquote><small><%= c.body %></small></blockquote>
 				<small><strong>By: <%= c.user.email %></strong> 
-				<cite><%= c.created_at.strftime("%d %b %Y at %H:%M") %>
-				<% if user_signed_in? && c.user == current_user %>
-					<%= link_to 'Редактировать комментарий', edit_comment_path(c), class: "btn btn-link" %> |
-					<%= link_to 'Удалить комментарий', comment_path(c), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот комментарий?" },  class: "btn btn-link" %></cite></small>
-				<% end %>
+				<cite>
+				  <%= c.created_at.strftime("%d %b %Y at %H:%M") %>
+				  <%= link_to_admin_and_owner c.user, 'Редактировать комментарий', edit_comment_path(c), class: "btn btn-link" %>
+				  <%= link_to_admin_and_owner c.user, 'Удалить комментарий', comment_path(c), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот комментарий?" },  class: "btn btn-link" %>
+				  </cite></small>
 				<hr>
 			</li>
 		<% end %>

@@ -2,6 +2,8 @@
   <strong><h4><%= @post.title %></h4></strong>
   
 </p>
+<hr>
+<%= render "publish_control_group", post: @post %>
 
 <p>
   <strong>By: </strong>
@@ -21,6 +23,8 @@
 		<% end %>
 	</ul>
 </p>
+
+
 <div class="well">
   <%= raw @post.body %>
 </div>
@@ -30,9 +34,8 @@
 
 <hr>
 
-<% if user_signed_in? && @post.user == current_user %>
-	<%= link_to 'Редактировать пост', edit_post_path(@post), class: "btn btn-link" %> |
-	<%= link_to 'Удалить пост', post_path(@post), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот пост?" },  class: "btn btn-link" %> |
-<% end %>
+<%= link_to_admin_and_owner @post.user, 'Редактировать пост', edit_post_path(@post), class: "btn btn-link" %>
+<%= link_to_admin_and_owner @post.user, 'Удалить пост', post_path(@post), method: "delete", data: { confirm: "Вы уверены, что хотите удалить этот пост?" },  class: "btn btn-link" %>
+
 <%= link_to 'Назад к списку постов', posts_path, class: "btn btn-link" %>
 <hr>
