@@ -14,5 +14,8 @@ class Post < ActiveRecord::Base
 	scope :unpublished, -> { where(published: false) }
 	# scope :unpublished, ->(user) { user.admin? ? where(published: false) : where(published: false, user_id: user.id) }
   	# scope :unpublished_included, ->(user) { published | unpublished(user) }
+
+  	has_many :subscriptions, :foreign_key => :subscribed_post_id
+  	has_many :post_subscribers, through: :subscriptions#, :source => :post_subscriber
   	
 end

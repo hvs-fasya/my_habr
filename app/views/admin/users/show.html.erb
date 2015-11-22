@@ -12,6 +12,13 @@
 		<p><%= @user.updated_at.strftime("%-d %b %Y %H:%M") %></p>
 	</div>
 </div>
+<% unless @user.subscribed_posts.empty? %>
+	<hr>
+	<p><cite>
+		<strong>Subscribed at the posts: </strong>
+		<%= @user.subscribed_posts.map {|post| "'#{post.title}'"}.join(",") %>
+	</cite></p> 
+<% end %>
 <hr>
 
 <% if current_user && current_user.admin? %>

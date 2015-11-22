@@ -24,5 +24,10 @@
     <p><%= raw post.body.truncate(150) %></p>
     <p><%= link_to 'Читать далее...', post, class: "btn btn-default btn-xs" %></p>
   </div>
+    <% unless post.post_subscribers.empty? %>
+      <cite><strong>Подписчики этого поста: </strong>
+      <%= post.post_subscribers.map {|sub| sub.email}.join(', ') %>
+      </cite>
+    <% end %>
     <hr>
 <% end %>

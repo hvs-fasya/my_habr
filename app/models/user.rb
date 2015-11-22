@@ -10,4 +10,7 @@ class User < ActiveRecord::Base
 	has_many :posts
 	has_many :comments
 
+	has_many :subscriptions, :foreign_key => :post_subscriber_id
+  	has_many :subscribed_posts, through: :subscriptions#, source: :subscribed_post
+
 end
