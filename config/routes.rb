@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get :unpublished_included, on: :collection
     get :unpublished, on: :collection
     resources :comments
+    resources :subscriptions, only: [:create, :destroy], shallow: true
   end
   resources :comments
   resources :categories, only: [:show]

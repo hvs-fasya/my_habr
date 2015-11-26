@@ -17,5 +17,12 @@ class Post < ActiveRecord::Base
 
   	has_many :subscriptions, :foreign_key => :subscribed_post_id
   	has_many :post_subscribers, through: :subscriptions#, :source => :post_subscriber
+
+  	after_create :subscribe_author
+
+  	protected
+
+  	def subscribe_author
+  	end
   	
 end

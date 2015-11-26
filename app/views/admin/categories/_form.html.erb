@@ -5,6 +5,6 @@
     <%= c.text_field :title, class: "form-control" %>
   </div>
   <div class="actions">
-    <%= c.submit :class =>"btn btn-primary btn-sm"%>
+    <%= c.submit t('.submit', action: @category.new_record? ? t('common.create') : t('common.update')), :class =>"btn btn-primary btn-sm"%>
   </div>
 <% end %>
